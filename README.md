@@ -12,3 +12,4 @@ Java 25, Spring Boot 4.1, MongoDB (Docker)
 - Lab 2: http/lab2-crud.http
 - Lab 3: app.csrf.enabled=false, http/lab3-basic-authorization.http (admin/admin)
 - Lab 4: app.csrf.enabled=true, http/lab4-csrf.http + auditing (createdBy, createdDate, ...)
+- Lab 5: 3 users (admin, manager, user), role-based access, http/lab5-roles.http

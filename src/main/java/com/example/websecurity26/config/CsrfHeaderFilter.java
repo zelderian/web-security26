@@ -8,7 +8,6 @@ import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
-/** Forces CSRF token generation (XSRF-TOKEN cookie) and returns it in the X-XSRF-TOKEN header. */
 public class CsrfHeaderFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)

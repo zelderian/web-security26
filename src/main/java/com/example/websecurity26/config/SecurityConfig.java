@@ -3,6 +3,7 @@ package com.example.websecurity26.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,15 +22,21 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain chain(HttpSecurity http,
                               @Value("${app.csrf.enabled:true}") boolean csrfEnabled) throws Exception {
-        http.authorizeHttpRequests(a -> a.anyRequest().authenticated())
+        http.authorizeHttpRequests(a -> a
+
+                .requestMatchers(HttpMethod.GET, "/api/v1/items/**").hasAnyRole("ADMIN", "MANAGER", "USER")
+                .requestMatchers(HttpMethod.POST, "/api/v1/items/**").hasAnyRole("ADMIN", "MANAGER")
+                .requestMatchers(HttpMethod.PUT, "/api/v1/items/**").hasAnyRole("ADMIN", "MANAGER")
+                .requestMatchers(HttpMethod.DELETE, "/api/v1/items/**").hasRole("ADMIN")
+                .anyRequest().authenticated())
             .httpBasic(Customizer.withDefaults());
 
-        if (csrfEnabled) {   // Lab 4
+        if (csrfEnabled) {
             http.csrf(csrf -> csrf
                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                     .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler()))
                 .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
-        } else {             // Lab 3
+        } else {
             http.csrf(csrf -> csrf.disable());
         }
         return http.build();
@@ -38,6 +45,8 @@ public class SecurityConfig {
     @Bean
     UserDetailsService users() {
         return new InMemoryUserDetailsManager(
-                User.withUsername("admin").password("{noop}admin").roles("ADMIN").build());
+                User.withUsername("admin").password("{noop}admin").roles("ADMIN").build(),
+                User.withUsername("manager").password("{noop}manager").roles("MANAGER").build(),
+                User.withUsername("user").password("{noop}user").roles("USER").build());
     }
 }

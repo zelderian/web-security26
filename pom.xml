@@ -5,7 +5,6 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <!-- Якщо 4.1.0 не знаходиться, постав найновішу 4.x з start.spring.io -->
         <version>4.1.0</version>
         <relativePath/>
     </parent>
