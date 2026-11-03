@@ -1,0 +1,22 @@
+### Lab 2
+
+### 1. GET all
+GET http://localhost:8080/api/v1/items
+
+### 2. POST create
+POST http://localhost:8080/api/v1/items
+Content-Type: application/json
+
+{ "name": "Laptop", "description": "Test item" }
+
+### 3. GET one
+GET http://localhost:8080/api/v1/items/{{id}}
+
+### 4. PUT update
+PUT http://localhost:8080/api/v1/items/{{id}}
+Content-Type: application/json
+
+{ "name": "Laptop v2", "description": "Updated" }
+
+### 5. DELETE
+DELETE http://localhost:8080/api/v1/items/{{id}}
